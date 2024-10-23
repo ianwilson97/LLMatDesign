@@ -51,6 +51,8 @@ class AskLLM:
             return "gpt-4o"
         elif self.llm_model == 'gpt-3.5':
             return "gpt-3.5-turbo-0125"
+        elif self.llm_model == 'gpt-4o-mini':
+            return "gpt-4o-mini"
         else:
             raise ValueError('Supported OpenAI models are GPT-3.5 and GPT-4.')
     

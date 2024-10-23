@@ -163,6 +163,111 @@ class Agent:
     
     def is_within_threshold(self, calculated_value, target_value, threshold=10):
         return abs(calculated_value - target_value) / abs(target_value) * 100 <= threshold
+    
+    def perform_cif_modification(self, structure, modification, calculation_type="formation_energy"):
+        if isinstance(modification, str):
+            from ast import literal_eval
+            modification, reason = literal_eval(modification)
+
+        modification_type = modification[0]
+
+        chemical_symbols = structure.get_chemical_symbols()
+        cell = structure.get_cell()
+        positions = structure.get_positions()
+
+        if modification_type == "substitute":
+            _, _old_atom, new_atom = modification
+            old_atom = ''.join(re.findall(r'[a-zA-Z]', _old_atom))
+            index = int(''.join(re.findall(r'\d', _old_atom)))
+            
+            for i, curr_symbol in enumerate(chemical_symbols):
+                if curr_symbol == old_atom:
+                    index -= 1
+                    if index == 0:
+                        break
+                        
+            chemical_symbols[i] = new_atom
+
+            new_structure = Atoms(
+                symbols=chemical_symbols,
+                positions=positions,
+                cell=cell,
+                pbc=(True, True, True)
+            )
+
+        elif modification_type == "exchange":
+            _, _atom1, _atom2 = modification
+            atom1 = ''.join(re.findall(r'[a-zA-Z]', _atom1))
+            atom2 = ''.join(re.findall(r'[a-zA-Z]', _atom2))
+            index1 = int(''.join(re.findall(r'\d', _atom1)))
+            index2 = int(''.join(re.findall(r'\d', _atom2)))
+
+            for i, curr_symbol in enumerate(chemical_symbols):
+                if curr_symbol == atom1:
+                    index1 -= 1
+                    if index1 == 0:
+                        break
+            
+            for j, curr_symbol in enumerate(chemical_symbols):
+                if curr_symbol == atom2:
+                    index2 -= 1
+                    if index2 == 0:
+                        break
+            
+            new_symbols = copy.deepcopy(chemical_symbols)
+            new_symbols[i] = atom2
+            new_symbols[j] = atom1
+
+            new_structure = Atoms(
+                symbols=new_symbols,
+                positions=positions,
+                cell=cell,
+                pbc=(True, True, True)
+            )
+
+        elif modification_type == "add":
+            _, atom = modification
+            new_symbols = chemical_symbols + [atom]
+            new_positions = np.vstack(
+                (
+                    positions,
+                    self.random_3d_point_within_cell(cell[0], cell[1], cell[2])
+                )
+            )
+
+            new_structure = Atoms(
+                symbols=new_symbols,
+                positions=new_positions,
+                cell=cell,
+                pbc=(True, True, True)
+            )
+
+        elif modification_type == "remove":
+            _, _atom = modification
+            atom = ''.join(re.findall(r'[a-zA-Z]', _atom))
+            index = int(''.join(re.findall(r'\d', _atom)))
+
+            for i, curr_symbol in enumerate(chemical_symbols):
+                if curr_symbol == atom:
+                    index -= 1
+                    if index == 0:
+                        break
+
+            # remove ith atom and ith positions
+            new_symbols = [x for j, x in enumerate(chemical_symbols) if j != i]
+            new_positions = positions[[j != i for j in range(len(chemical_symbols))]]
+
+            new_structure = Atoms(
+                symbols=new_symbols,
+                positions=new_positions,
+                cell=cell,
+                pbc=(True, True, True)
+            )
+
+        else:
+            raise ValueError(f"Invalid modification type: {modification_type}")
+
+        return self.optimize_and_calculate(new_structure, calculation_type=calculation_type)
 
     def perform_modification(self, structure, modification, calculation_type="formation_energy"):
         if isinstance(modification, str):

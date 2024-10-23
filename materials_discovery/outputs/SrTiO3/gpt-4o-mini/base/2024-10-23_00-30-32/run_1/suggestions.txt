@@ -1,0 +1,33 @@
+None
+{
+    "Hypothesis": "To decrease the band gap from 1.85 eV to 1.4 eV, I propose to substitute one of the titanium atoms (Ti1) with a lower band gap element, such as Zinc (Zn). This substitution is expected to modify the electronic structure and reduce the band gap.",
+    "Modification": ["substitute", "Ti1", "Zn"]
+}
+{
+    "Hypothesis": "To decrease the band gap from 2.60 eV to 1.4 eV, I propose to substitute one of the strontium atoms (Sr1) with a lower band gap element, such as Barium (Ba). This substitution is expected to modify the electronic structure and reduce the band gap, as Barium typically has a lower band gap compared to Strontium.",
+    "Modification": ["substitute", "Sr1", "Ba"]
+}
+{
+    "Hypothesis": "To decrease the band gap from 2.53 eV to 1.4 eV, I propose to remove one of the oxygen atoms (O1) from the material. Oxygen typically contributes to the formation of the valence band, and its removal may lead to a significant alteration in the electronic structure, potentially lowering the band gap.",
+    "Modification": ["remove", "O1"]
+}
+{
+    "Hypothesis": "To decrease the band gap from 2.70 eV to 1.4 eV, I propose to substitute one of the barium atoms (Ba1) with a lower band gap element, such as Calcium (Ca). Calcium typically has a lower band gap compared to Barium, and this substitution may help in modifying the electronic structure to achieve the desired reduction in band gap.",
+    "Modification": ["substitute", "Ba1", "Ca"]
+}
+{
+    "Hypothesis": "To decrease the band gap from 2.65 eV to 1.4 eV, I propose to substitute one of the calcium atoms (Ca1) with a higher band gap element, such as Lead (Pb). Lead typically has a lower band gap compared to Calcium, and this substitution may help in modifying the electronic structure to achieve the desired reduction in band gap.",
+    "Modification": ["substitute", "Ca1", "Pb"]
+}
+{
+    "Hypothesis": "To decrease the band gap from 2.57 eV to 1.4 eV, I propose to remove one of the oxygen atoms (O2) from the material. Oxygen atoms can significantly influence the electronic structure, and their removal may lead to a reduction in the band gap by altering the valence band characteristics.",
+    "Modification": ["remove", "O2"]
+}
+{
+    "Hypothesis": "To decrease the band gap from 2.31 eV to 1.4 eV, I propose to substitute one of the lead atoms (Pb1) with a lower band gap element, such as Tin (Sn). Tin typically has a lower band gap compared to Lead, and this substitution may help in modifying the electronic structure to achieve the desired reduction in band gap.",
+    "Modification": ["substitute", "Pb1", "Sn"]
+}
+{
+    "Hypothesis": "To decrease the band gap from 1.90 eV to 1.4 eV, I propose to substitute one of the oxygen atoms (O1) with a lower band gap element, such as Sulfur (S). Sulfur typically has a lower band gap compared to Oxygen, and this substitution may help in modifying the electronic structure to achieve the desired reduction in band gap.",
+    "Modification": ["substitute", "O1", "S"]
+}

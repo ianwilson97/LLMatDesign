@@ -1,0 +1,33 @@
+data_image0
+_chemical_formula_structural       SnSrZnTiSO3
+_chemical_formula_sum              "Sn1 Sr1 Zn1 Ti1 S1 O3"
+_cell_length_a       5.52233
+_cell_length_b       5.52233
+_cell_length_c       5.5349
+_cell_angle_alpha    119.925
+_cell_angle_beta     119.925
+_cell_angle_gamma    90
+
+_space_group_name_H-M_alt    "P 1"
+_space_group_IT_number       1
+
+loop_
+  _space_group_symop_operation_xyz
+  'x, y, z'
+
+loop_
+  _atom_site_type_symbol
+  _atom_site_label
+  _atom_site_symmetry_multiplicity
+  _atom_site_fract_x
+  _atom_site_fract_y
+  _atom_site_fract_z
+  _atom_site_occupancy
+  Sn  Sn1       1.0  0.70203  0.28836  0.47410  1.0000
+  Sr  Sr1       1.0  0.08292  0.66552  0.37306  1.0000
+  Zn  Zn1       1.0  0.39419  0.37125  0.98529  1.0000
+  Ti  Ti1       1.0  0.12652  0.01459  0.06960  1.0000
+  S   S1        1.0  0.65937  0.83346  0.93974  1.0000
+  O   O1        1.0  0.13254  0.62180  0.87235  1.0000
+  O   O2        1.0  0.35792  0.14603  0.53561  1.0000
+  O   O3        1.0  0.95781  0.08189  0.72331  1.0000
