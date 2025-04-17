@@ -114,15 +114,10 @@ def solution_base(agent, start_from=1, chemical_formula='SrTiO3', target_value=1
             )
 
             action_str = get_action(agent.llm, prompt)
-
             print(f"Suggestion: {action_str}; {structures_list[-1].get_chemical_formula('metal')}")
-
-            print(action_str)
-
             action = ast.literal_eval(action_str)
 
             print("Operation: ", action["Modification"])
-            
             new_structure, new_band_gap = agent.perform_cif_modification(structures_list[-1], action["Modification"], calculation_type='band_gap')
             print(f"New band gap: {new_band_gap}; {new_structure.get_chemical_formula('metal')}")
 
@@ -189,7 +184,6 @@ def solution_historyless(agent, start_from=1, chemical_formula='SrTiO3', target_
             )
 
             action_str = get_action(agent.llm, prompt)
-
             print(f"Suggestion: {action_str}; {structures_list[-1].get_chemical_formula('metal')}")
 
             action = ast.literal_eval(action_str)
@@ -211,6 +205,7 @@ def solution_historyless(agent, start_from=1, chemical_formula='SrTiO3', target_
         return False, suggestions_list, structures_list, band_gaps_list, reflections_list
     
 def get_action(llm, prompt):
+    count = 0
     while True:
         llm_response = llm.ask(prompt)
         code = extract_python_code(llm_response)

@@ -2,6 +2,7 @@ import os
 import sys
 import ase
 import ase.io
+import torch
 import argparse
 from datetime import datetime
 
@@ -11,10 +12,14 @@ from llmatdesign.core.agent import Agent
 
 from example_solutions import *
 
+from transformers import AutoTokenizer, AutoModelForCausalLM
+
+DEEPSEEK_VERSION = "deepseek-ai/DeepSeek-R1-Distill-Llama-8B"
+
 def main(args):
     api_key = ""
     openai_organization = ""
-    llm = AskLLM(args.llm_model, api_key=api_key, openai_organization=openai_organization)
+    llm = AskLLM(tokenizer, model, api_key=api_key, openai_organization=openai_organization)
 
     agent = Agent(
         llm,
@@ -36,7 +41,7 @@ def main(args):
     # Get the current date and time
     now = datetime.now()
     date_time_str = now.strftime("%Y-%m-%d_%H-%M-%S")
-    output_save_path = f"./outputs/{args.chemical_formula}/{args.llm_model}/{args.solution_type}/{date_time_str}/"
+    output_save_path = f"./outputs/{args.chemical_formula}/deepseek8B/{args.solution_type}/{date_time_str}/"
     os.makedirs(output_save_path, exist_ok=True)
 
     success_count = 0
@@ -101,12 +106,17 @@ def main(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--llm_model", type=str, default="gemini-1.0-pro", help="The LLM model to use")
-    parser.add_argument("--api_key", type=str, default=None, help="LLM api key")
-    parser.add_argument("--save_path", type=str, default="./outputs/cifs/", help="The path to save the CIF files")
-    parser.add_argument("--forcefield_config_path", type=str, default="../checkpoints/matdeeplearn/force_field/config.yml", help="The path to the force field config file")
-    parser.add_argument("--bandgap_config_path", type=str, default="../checkpoints/matdeeplearn/band_gap/config.yml", help="The path to the band gap config file")
-    parser.add_argument("--formation_energy_config_path", type=str, default="../checkpoints/matdeeplearn/formation_energy/config.yml", help="The path to the formation energy config file")
+    tokenizer = AutoTokenizer.from_pretrained("deepseek-ai/DeepSeek-R1-Distill-Llama-8B")
+    model = AutoModelForCausalLM.from_pretrained(
+        DEEPSEEK_VERSION,
+        torch_dtype=torch.float16,
+        device_map="auto"
+    )
+    parser.add_argument("--api_key", type=str, default="AIzaSyB0SO7QNbpDWfK8SZO_7nXqQlbsPg44T4o", help="LLM api key")
+    parser.add_argument("--save_path", type=str, default="./outputs/cifs/", help="The path to save the CIF files") # dont need this
+    parser.add_argument("--forcefield_config_path", type=str, default="/home/hice1/gashkenazi3/LLMatDesign/checkpoints/matdeeplearn/force_field/config.yml", help="The path to the force field config file")
+    parser.add_argument("--bandgap_config_path", type=str, default="/home/hice1/gashkenazi3/LLMatDesign/checkpoints/matdeeplearn/band_gap/config.yml", help="The path to the band gap config file")
+    parser.add_argument("--formation_energy_config_path", type=str, default="/home/hice1/gashkenazi3/LLMatDesign/checkpoints/matdeeplearn/formation_energy/config.yml", help="The path to the formation energy config file")
     parser.add_argument("--solution_type", type=str, default="base", help="The type of solution to run")
     parser.add_argument("--chemical_formula", type=str, default="SrTiO3", help="The chemical formula of the starting material")
     parser.add_argument("--target_value", type=float, default=1.4, help="The target value of the property to be optimized")

@@ -1,6 +1,6 @@
 task:
   # Path to the checkpoint.pt file. The model used in the calculator will load parameters from this file.
-  checkpoint_path: ../checkpoints/matdeeplearn/force_field/best_checkpoint.pt
+  checkpoint_path: /home/hice1/gashkenazi3/LLMatDesign/checkpoints/matdeeplearn/force_field/best_checkpoint.pt
 
 model:
   name: torchmd_etEarly

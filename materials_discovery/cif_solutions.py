@@ -154,8 +154,6 @@ def solution_base(agent, start_from=1, chemical_formula='SrTiO3', target_value=1
 
             action_str = get_action(agent.llm, prompt)
 
-            print(action_str)
-
             print(f"Suggestion: {action_str}; {structures_list[-1].get_chemical_formula('metal')}")
 
             action = ast.literal_eval(action_str)

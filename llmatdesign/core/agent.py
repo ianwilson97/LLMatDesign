@@ -38,7 +38,6 @@ class Agent:
 
         self.is_success = False
         self.mp_api_key = os.environ.get("MP_API_KEY") if mp_api_key is None else mp_api_key
-
         # set up the force field calculator
         if self.forcefield_config_path is not None:
             self.calculator = MDLCalculator(self.forcefield_config_path)
@@ -151,7 +150,6 @@ class Agent:
 
             toc = time()
             print(f"Optimized {len(initial_atoms)} structures in {toc - tic:.2f} s")
-        
         if calculation_type == "formation_energy" and self.formation_energy_calculator is not None:
             val = self.formation_energy_calculator.direct_calculate(optimized_atoms[0])
             return optimized_atoms[0], val
@@ -169,6 +167,7 @@ class Agent:
             from ast import literal_eval
             modification, reason = literal_eval(modification)
 
+        
         modification_type = modification[0]
 
         chemical_symbols = structure.get_chemical_symbols()
@@ -178,8 +177,15 @@ class Agent:
         if modification_type == "substitute":
             _, _old_atom, new_atom = modification
             old_atom = ''.join(re.findall(r'[a-zA-Z]', _old_atom))
-            index = int(''.join(re.findall(r'\d', _old_atom)))
-            
+            index = 1  # Default to 1 if no number specified
+            for i, symbol in enumerate(structure.symbols):
+                if symbol.startswith(old_atom):
+                    # Extract number after the element, default to 1 if no number
+                    curr_index = int(''.join(filter(str.isdigit, symbol))) if any(c.isdigit() for c in symbol) else 1
+                    if curr_index == index:
+                        index = i
+                        break
+                    index += 1
             for i, curr_symbol in enumerate(chemical_symbols):
                 if curr_symbol == old_atom:
                     index -= 1

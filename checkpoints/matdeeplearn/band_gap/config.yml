@@ -1,5 +1,5 @@
 task:
-  checkpoint_path: ../checkpoints/matdeeplearn/band_gap/best_checkpoint.pt
+  checkpoint_path: /home/hice1/gashkenazi3/LLMatDesign/checkpoints/matdeeplearn/band_gap/best_checkpoint.pt
 
 model:
   name: torchmd_etEarly
