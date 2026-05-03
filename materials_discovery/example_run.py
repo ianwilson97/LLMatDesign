@@ -112,7 +112,7 @@ if __name__ == "__main__":
         torch_dtype=torch.float16,
         device_map="auto"
     )
-    parser.add_argument("--api_key", type=str, default="AIzaSyB0SO7QNbpDWfK8SZO_7nXqQlbsPg44T4o", help="LLM api key")
+    parser.add_argument("--api_key", type=str, default="API_KEY_EXAMPLE", help="LLM api key")
     parser.add_argument("--save_path", type=str, default="./outputs/cifs/", help="The path to save the CIF files") # dont need this
     parser.add_argument("--forcefield_config_path", type=str, default="/home/hice1/gashkenazi3/LLMatDesign/checkpoints/matdeeplearn/force_field/config.yml", help="The path to the force field config file")
     parser.add_argument("--bandgap_config_path", type=str, default="/home/hice1/gashkenazi3/LLMatDesign/checkpoints/matdeeplearn/band_gap/config.yml", help="The path to the band gap config file")
